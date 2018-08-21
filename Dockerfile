@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
 # common
 RUN apt-get update && \
@@ -12,20 +12,18 @@ RUN apt-get update && \
         libz-dev \
         libpq-dev \
         libjpeg-dev \
-        libpng12-dev \
+        libpng-dev \
         libfreetype6-dev \
         libssl-dev \
         libxslt-dev \
         # for amp lib
         librabbitmq-dev \
-        # for mcrypt extension
-        libmcrypt-dev \
         libmagickwand-dev
 
 RUN rm -r /var/lib/apt/lists/*
 
 # Install the PHP extention
-RUN docker-php-ext-install mcrypt bcmath intl pdo_mysql \
+RUN docker-php-ext-install bcmath intl pdo_mysql \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-install gd \
