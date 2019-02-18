@@ -18,7 +18,11 @@ RUN apt-get update && \
         libxslt-dev \
         # for amp lib
         librabbitmq-dev \
-        libmagickwand-dev
+        # for mcrypt extension
+        libmcrypt-dev \
+        libmagickwand-dev \
+        libssh2-1 \
+        libssh2-1-dev
 
 RUN rm -r /var/lib/apt/lists/*
 
@@ -42,6 +46,8 @@ RUN docker-php-ext-install bcmath intl pdo_mysql \
     && docker-php-ext-enable pcntl \
     && pecl install imagick-beta \
     && docker-php-ext-enable imagick \
+    && pecl install ssh2-1.1.2 \
+    && docker-php-ext-enable ssh2 \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
     && chmod +x /usr/local/bin/composer
 
