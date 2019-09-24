@@ -58,6 +58,9 @@ RUN echo "extension=mongodb.so" >  $PHP_INI_DIR/conf.d/mongodb.ini
 ### Ampq lib
 RUN pecl install amqp
 
+# ext-sockets
+RUN docker-php-ext-install sockets
+
 # Time Zone
 RUN echo "Europe/Paris" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
