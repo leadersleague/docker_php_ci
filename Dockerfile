@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:8.1.1-fpm
 
 # common
 RUN apt-get update && \
@@ -22,7 +22,9 @@ RUN apt-get update && \
         libmcrypt-dev \
         libmagickwand-dev \
         libssh2-1 \
-        libssh2-1-dev
+        libssh2-1-dev \
+        libonig-dev \
+        libzip-dev
 
 RUN rm -r /var/lib/apt/lists/*
 
@@ -31,10 +33,10 @@ RUN docker-php-ext-install bcmath intl pdo_mysql \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-install gd \
-    && docker-php-ext-configure gd \
-        --enable-gd-native-ttf \
-        --with-jpeg-dir=/usr/lib \
-        --with-freetype-dir=/usr/include/freetype2 \
+#    && docker-php-ext-configure gd \
+#        --enable-gd-native-ttf \
+#        --with-jpeg-dir=/usr/lib \
+#        --with-freetype-dir=/usr/include/freetype2 \
     && docker-php-ext-install mbstring \
     && docker-php-ext-install mysqli \
     && docker-php-ext-install opcache \
@@ -45,10 +47,10 @@ RUN docker-php-ext-install bcmath intl pdo_mysql \
     && docker-php-ext-install pcntl \
     && docker-php-ext-enable pcntl \
     && pecl install imagick-beta \
-    && docker-php-ext-enable imagick \
-    && pecl install ssh2-1.1.2 \
-    && docker-php-ext-enable ssh2 \
-    && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
+    && docker-php-ext-enable imagick
+#    && pecl install ssh2-1.1.2 \
+#    && docker-php-ext-enable ssh2 \
+RUN  php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
     && chmod +x /usr/local/bin/composer
 
 # driver mongodb
