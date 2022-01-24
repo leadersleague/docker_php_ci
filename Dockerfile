@@ -1,6 +1,7 @@
 FROM php:8.1.1-fpm
 
 # common
+RUN echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | tee /etc/apt/sources.list.d/symfony-cli.list
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ca-certificates wget \
         curl \
@@ -24,7 +25,8 @@ RUN apt-get update && \
         libssh2-1 \
         libssh2-1-dev \
         libonig-dev \
-        libzip-dev
+        libzip-dev \
+        symfony-cli
 
 RUN rm -r /var/lib/apt/lists/*
 
