@@ -26,9 +26,13 @@ RUN apt-get update && \
         libssh2-1-dev \
         libonig-dev \
         libzip-dev \
-        symfony-cli
+        symfony-cli \
+        supervisor
 
-RUN rm -r /var/lib/apt/lists/*
+RUN rm -r /var/lib/apt/lists/* && \
+    sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
+VOLUME ["/etc/supervisor/conf.d"]
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
 # Install the PHP extention
 RUN docker-php-ext-install bcmath intl pdo_mysql \
