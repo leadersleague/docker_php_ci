@@ -75,3 +75,5 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Conf php
 COPY php.ini $PHP_INI_DIR/conf.d/php.ini
+
+RUN usermod -u 1000 www-data
